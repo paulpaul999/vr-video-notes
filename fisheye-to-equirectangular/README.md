@@ -28,9 +28,9 @@ To understand the command, let's break down  the video filter steps.
 ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb" equirectangular_TB_360.mp4
 ```
 
-`out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`). This is because with side-by-side mode ffmpeg outputs an equirectangular VR video with 360° FOV. The video filter is called *v360* after all :smiley:. Going for top-bottom mode makes it easier to use other ffmpeg filters to crop and rearrange the stereo images.
+Note that `out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`). We cannot go for side-by-side at this point already, because *v360* filter outputs 360° FOV. The video filter is called *v360* after all :smiley:. Going for top-bottom mode makes it easier to use other ffmpeg filters to crop and rearrange the stereo images.
 
-**Step 2: Cropping the center half to get VR180 top-bottom**
+**Step 2: Cropping to the center half to get VR180 top-bottom**
 
 ```sh
 ffmpeg -i equirectangular_TB_360.mp4 -filter:v "crop=iw*(50/100):ih" equirectangular_TB_180.mp4
