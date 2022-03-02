@@ -4,7 +4,7 @@ These are some notes on how to convert stereoscopic (side-by-side, SBS) [virtual
 
 **Notes:**
 
-- Fisheye is assumed to have an FOV (field of view) of **200°** in the listed commands. *(Feel free to adjust FOV to fit your material.)*
+- Fisheye is assumed to have an FOV (field of view) of **200°** in the listed commands. *(Feel free to adjust parameters according to your material.)*
 - This tutorial relies on __ffmpeg__'s __[v360](https://ffmpeg.org/ffmpeg-filters.html#v360)__ and __[stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d)__ filter. Note that there are ffmpeg versions out there that don't include those filters.
 
 ## Command
