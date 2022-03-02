@@ -52,7 +52,7 @@ ffmpeg -i equirectangular_TB_180.mp4 -filter:v "stereo3d=tbl:sbsl" equirectangul
     - Increase bitrate.
     - Try different encoding [profiles](https://x265.readthedocs.io/en/master/cli.html#profile-level-tier) and/or tune [other parameters](https://x265.readthedocs.io/en/master/cli.html).
 - Test different interpolation parameters of the `v360` filter. See `interp` parameter.
-- Oversampling strategy: E.g. adding additional filters to the chain in order to upscale video before `v360` filter and downscale again afterwards. 
+- Oversampling strategy: E.g. adding additional filters to the chain in order to upscale video before `v360` filter and downscale back afterwards. 
 
 
 ## Helpful Links
