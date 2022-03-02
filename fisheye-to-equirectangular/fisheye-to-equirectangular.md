@@ -8,6 +8,11 @@ These are some notes on how to convert stereoscopic (side-by-side, SBS) [virtual
 - This tutorial relies on __ffmpeg's [v360 filter](https://ffmpeg.org/ffmpeg-filters.html#v360)__. Note that there are ffmpeg versions out there that don't include this filter.
 - These commands were tested on macOS and Linux (Ubuntu).
 
+## Command
+
+```sh
+ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb,crop=iw*(1/2):ih,stereo3d=tbl:sbsl" -map 0 -c copy -c:v libx265 equirectangular.mp4
+```
 
 ## Helpful Links
 
