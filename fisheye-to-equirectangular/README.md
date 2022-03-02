@@ -19,7 +19,7 @@ That's it! :boom:
 
 ## Understanding the command
 
-To understand the command, let's split it up into its video filter steps.
+To understand the command, let's break down  the video filter steps.
 
 
 **Step 1: Fisheye to equirectangular (over-under / top-bottom):**
