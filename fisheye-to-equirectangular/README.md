@@ -30,13 +30,13 @@ ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output
 
 `out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`). This is because with side-by-side mode ffmpeg outputs an equirectangular VR video with 360° FOV. The video filter is called *v360* after all :smiley:. Going for top-bottom mode makes it easier to use other ffmpeg filters to crop and rearrange the stereo images.
 
-**Step 2: Cropping the center half to get VR180 over-under**
+**Step 2: Cropping the center half to get VR180 top-bottom**
 
 ```sh
 ffmpeg -i equirectangular_TB_360.mp4 -filter:v "crop=iw*(50/100):ih" equirectangular_TB_180.mp4
 ```
 
-**Step 3: Convert VR180 over-under to VR180 side-by-side**
+**Step 3: Convert top-bottom to side-by-side**
 
 Using [stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d) filter.
 
@@ -51,7 +51,7 @@ ffmpeg -i equirectangular_TB_180.mp4 -filter:v "stereo3d=tbl:sbsl" equirectangul
 - Output Codec (H.265):
     - Increase bitrate.
     - Try different encoding [profiles](https://x265.readthedocs.io/en/master/cli.html#profile-level-tier) and/or tune [other parameters](https://x265.readthedocs.io/en/master/cli.html).
-- Test different interpolation parameters of the `v360` filter. See `interp` parameter.
+- Test different interpolation methods of the `v360` filter. See `interp` parameter.
 - Oversampling strategy: E.g. adding additional filters to the chain in order to upscale video before `v360` filter and downscale back afterwards. 
 
 
