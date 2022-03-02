@@ -44,14 +44,16 @@ Using [stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d) filter.
 ffmpeg -i equirectangular_TB_180.mp4 -filter:v "stereo3d=tbl:sbsl" equirectangular_LR_180.mp4
 ```
 
-## Room for improvement
+## Room for improvement (contributions are welcome)
 
-- Preserve image quality: When I tested the above-mentioned command the the result came with a slight loss in image sharpness. Ideas:
-    - Output Codec (H.265):
-        - Increase bitrate.
-        - Try different encoding [profiles](https://x265.readthedocs.io/en/master/cli.html#profile-level-tier) and/or tune [other parameters](https://x265.readthedocs.io/en/master/cli.html).
-    - Test different interpolation parameters of the `v360` filter. See `interp` parameter.
-    - Oversampling strategy: E.g. adding additional filters to the chain in order to upscale video before `v360` filter and downscale again afterwards. 
+**Preserve image quality:** When I tested the above-mentioned command the the result came with a slight loss in image sharpness. Ideas:
+
+- Output Codec (H.265):
+    - Increase bitrate.
+    - Try different encoding [profiles](https://x265.readthedocs.io/en/master/cli.html#profile-level-tier) and/or tune [other parameters](https://x265.readthedocs.io/en/master/cli.html).
+- Test different interpolation parameters of the `v360` filter. See `interp` parameter.
+- Oversampling strategy: E.g. adding additional filters to the chain in order to upscale video before `v360` filter and downscale again afterwards. 
+
 
 ## Helpful Links
 
