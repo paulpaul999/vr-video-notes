@@ -46,7 +46,7 @@ ffmpeg -i equirectangular_TB_180.mp4 -filter:v "stereo3d=tbl:sbsl" equirectangul
 
 ## Room for improvement (contributions are welcome)
 
-**Preserve image quality:** When I tested the above-mentioned command the the result came with a slight loss in image sharpness. Ideas:
+**Preserve image quality:** When I tested the above-mentioned command the the result came with a slight loss in image sharpness. Here are some ideas that could improve quality:
 
 - Output Codec (H.265):
     - Increase bitrate.
