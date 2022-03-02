@@ -14,6 +14,24 @@ These are some notes on how to convert stereoscopic (side-by-side, SBS) [virtual
 ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb,crop=iw*(1/2):ih,stereo3d=tbl:sbsl" -map 0 -c copy -c:v libx265 -crf 18 -pix_fmt yuv420p equirectangular_LR_180.mp4
 ```
 
+*`ih_fov` and `iv_fov` tune FOV of input fisheye material*
+
+## Understanding the command
+
+To understand the command, let's split it up into its video filter steps.
+
+
+**Fisheye to equirectangular (over-under / top-bottom):**
+
+```sh
+ffmpeg -i fisheye.mp4 -vf v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb eq.mp4
+```
+
+`out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`), because in SBS
+
+
+As far as I know the [v360 filter](https://ffmpeg.org/ffmpeg-filters.html#v360)
+
 ## Helpful Links
 
 - https://ffmpeg.org/ffmpeg-filters.html#v360
