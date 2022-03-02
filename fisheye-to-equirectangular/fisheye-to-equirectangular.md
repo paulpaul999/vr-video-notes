@@ -6,7 +6,6 @@ These are some notes on how to convert stereoscopic (side-by-side, SBS) [virtual
 
 - Fisheye is assumed to have a field of view (FOV) of **200°** in the listed commands. *(Feel free to adjust FOV to fit your material.)*
 - This tutorial relies on __ffmpeg__'s __[v360](https://ffmpeg.org/ffmpeg-filters.html#v360)__ and __[stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d)__ filter. Note that there are ffmpeg versions out there that don't include those filters.
-- These commands were tested on macOS and Linux (Ubuntu).
 
 ## Command
 
@@ -24,7 +23,7 @@ To understand the command, let's split it up into its video filter steps.
 **Fisheye to equirectangular (over-under / top-bottom):**
 
 ```sh
-ffmpeg -i fisheye.mp4 -vf v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb eq.mp4
+ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb" equirectangular_TB_360.mp4
 ```
 
 `out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`). This is because with side-by-side mode ffmpeg outputs an equirectangular VR video with 360° FOV. The video filter is called *v360* after all :smiley:. Going for top-bottom mode makes it easier to use other ffmpeg filters to crop and rearrange the stereo images.
@@ -32,7 +31,7 @@ ffmpeg -i fisheye.mp4 -vf v360=input=fisheye:ih_fov=200:iv_fov=200:output=equire
 **Cropping the center half to get VR180 over-under**
 
 ```sh
-ffmpeg -i fisheye.mp4 -filter:v "crop=iw*(50/100):ih" cropped.mp4
+ffmpeg -i equirectangular_TB_360.mp4 -filter:v "crop=iw*(50/100):ih" cropped.mp4
 ```
 
 As far as I know the [v360 filter](https://ffmpeg.org/ffmpeg-filters.html#v360)
