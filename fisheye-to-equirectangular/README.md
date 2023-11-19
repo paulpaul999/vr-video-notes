@@ -4,45 +4,22 @@ These are some notes on how to convert stereoscopic (side-by-side, SBS) [virtual
 
 **Notes:**
 
-- Fisheye is assumed to have an FOV (field of view) of **200°** in the listed commands. *(Feel free to adjust parameters according to your material.)*
+- Fisheye is assumed to have an FOV (field of view) of **200°** in the following command. *(Feel free to adjust parameters according to your material.)*
 - This tutorial relies on __ffmpeg__'s __[v360](https://ffmpeg.org/ffmpeg-filters.html#v360)__ and __[stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d)__ filter. Note that there are ffmpeg versions out there that don't include those filters.
 
 ## Command
 
 ```sh
-ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb,crop=iw*(1/2):ih,stereo3d=tbl:sbsl" -map 0 -c copy -c:v libx265 -crf 18 -pix_fmt yuv420p equirectangular_LR_180.mp4
+ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=hequirect:in_stereo=sbs:out_stereo=sbs" -map 0 -c copy -c:v libx265 -crf 18 -pix_fmt yuv420p equirectangular_LR_180.mp4
 ```
 
 That's it! :boom:
 
 *Note: `ih_fov` and `iv_fov` tune FOV of input fisheye material*
 
-## Understanding the command
+## Note
 
-To understand the command, let's break down  the video filter steps.
-
-
-**Step 1: Fisheye to equirectangular (over-under / top-bottom):**
-
-```sh
-ffmpeg -i fisheye.mp4 -filter:v "v360=input=fisheye:ih_fov=200:iv_fov=200:output=equirect:in_stereo=sbs:out_stereo=tb" equirectangular_TB_360.mp4
-```
-
-Note that `out_stereo` parameter is set to top-bottom (`tb`) instead of side-by-side (`sbs`). We cannot go for side-by-side at this point already, because *v360* filter outputs 360° FOV. The video filter is called *v360* after all :smiley:. Going for top-bottom mode makes it easier to use other ffmpeg filters to crop and rearrange the stereo images.
-
-**Step 2: Cropping to the center half to get VR180 top-bottom**
-
-```sh
-ffmpeg -i equirectangular_TB_360.mp4 -filter:v "crop=iw*(50/100):ih" equirectangular_TB_180.mp4
-```
-
-**Step 3: Convert top-bottom to side-by-side**
-
-Using [stereo3d](https://ffmpeg.org/ffmpeg-filters.html#stereo3d) filter.
-
-```sh
-ffmpeg -i equirectangular_TB_180.mp4 -filter:v "stereo3d=tbl:sbsl" equirectangular_LR_180.mp4
-```
+*(In a past version of this document, some filter steps were explained here. Since the newer version has a much simpler ffmpeg command, those explanations were discarded.)*
 
 ## Room for improvement (contributions are welcome)
 
